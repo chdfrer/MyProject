@@ -1,0 +1,34 @@
+﻿@model CreateSampleDataModel
+
+@{
+    ViewData["Title"] = "Tạo dữ liệu mẫu";
+}
+
+<h4>@ViewData["Title"]</h4>
+<hr />
+<div class="col-4">
+    <form asp-action="CreateSampleData">
+        <div class="form-group">
+            <p>Nhập số lượng dữ liệu mẫu cần tạo:</p>
+        </div>
+        <div class="form-group">
+            <label asp-for="NumberOfUser" class="control-label"></label>
+            <input asp-for="NumberOfUser" class="form-control" />
+            <span asp-validation-for="NumberOfUser" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="NumberOfCategory" class="control-label"></label>
+            <input asp-for="NumberOfCategory" class="form-control" />
+            <span asp-validation-for="NumberOfCategory" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="NumberOfBlog" class="control-label"></label>
+            <input asp-for="NumberOfBlog" class="form-control" />
+            <span asp-validation-for="NumberOfBlog" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Tạo" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MyBlog.Models.UserModels
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+@* Inject ICompositeViewEngine to check for the existence of partial before render*@
+@inject ICompositeViewEngine Engine
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+        string nameOfUser = user.Name != null ? user.Name : user.UserName;
+        <li class="nav-item">
+            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-controller="Manage" asp-action="Index" 
+               title="Manage">Xin chào @nameOfUser!</a>
+        </li>
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-controller="Account" asp-action="LogOut" >
+                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Đăng Xuất</button>
+            </form>
+        </li>
+        @if (Engine.FindView(ViewContext, "_AdminDropdownMenu", false).Success)
+        {
+            @await Html.PartialAsync("_AdminDropdownMenu")
+        }
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" id="register" asp-area="identity" asp-controller="Account" asp-action="Register">Đăng Ký</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" id="login" asp-area="identity" asp-controller="Account" asp-action="Login">Đăng Nhập</a>
+        </li>
+    }
+</ul>

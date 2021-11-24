@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MyBlog.Models.UserModels
+@using Microsoft.AspNetCore.Authorization
+
+@inject SignInManager<AppUser> SignInManager
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
+
+@if (SignInManager.IsSignedIn(User)
+ && (await authorizationService.AuthorizeAsync(User, "Admin")).Succeeded)
+{
+
+    <li class="nav-item dropdown">
+        <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Manager
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+            <a class="dropdown-item" asp-area="Identity" asp-controller="Role" asp-action="index">Quản lý role</a>
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-area="Identity" asp-controller="User" asp-action="index">Quản lý User</a>
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-area="" asp-controller="Contact" asp-action="index">Quản lý Contact</a>
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-area="Categories" asp-controller="Category" asp-action="index">Quản lý Danh mục</a>
+
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-area="Database" asp-controller="DbManage" asp-action="index">Quản lý Database</a>
+        </div>
+    </li>
+}

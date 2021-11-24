@@ -1,0 +1,75 @@
+﻿@using MyBlog.Models
+@using MyBlog.Areas.Categories.Models
+
+@model IEnumerable<MyBlog.Areas.Blog.Models.BlogModel>
+
+@{
+    ViewData["Title"] = "Danh mục bài viết";
+    string author = "";
+    var totalItem = ((PagingModel)ViewData["pageModel"]).TotalItem;
+}
+
+<h1>@ViewData["Title"]</h1>
+<dev>
+    <dev>
+        <a asp-action="Create">Tạo bài viết mới</a> |
+        @if (ViewBag.isLogin)
+        {<a asp-action="PrivateBlog">Bài viết của tôi</a>}
+    </dev>
+    <p>Tổng số bài viết: <strong>@totalItem</strong></p>
+</dev>
+<dev>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BlogCategory)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateCreated)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Read" asp-route-id="@item.BlogId">@Html.DisplayFor(modelItem => item.Title)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @foreach (var blogCategory in item.BlogCategory)
+                        {
+                            <p>@blogCategory.Category.Title</p>
+                        }
+                    </td>
+                    @if (item.Author.Name != null)
+                    {
+                        author = item.Author.Name;
+                    }
+                    else { author = item.Author.UserName; }
+                    <td>
+                        @author
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateCreated)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input type="hidden" name="categoryId" value="@ViewBag.CategoryId" />
+    <partial name="_PagingPartial" model="@ViewData["pageModel"]" />
+</dev>

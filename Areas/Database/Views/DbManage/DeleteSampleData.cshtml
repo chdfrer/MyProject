@@ -1,0 +1,8 @@
+﻿@{ 
+    ViewData["Title"] = "Xóa dữ liệu mẫu";
+}
+<form asp-action="DeleteSampleData">
+    <p>Chắc chắc xóa dữ liệu mẫu?</p>
+    <input type="submit" value="Xóa" class="btn btn-danger" /> |
+    <a asp-action="Index" class="btn btn-secondary" >Không</a>
+</form>

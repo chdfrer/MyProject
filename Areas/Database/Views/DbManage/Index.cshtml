@@ -1,0 +1,41 @@
+﻿@model DbInfoModel
+
+@{
+    ViewData["Title"] = "Thông Tin Cơ Sở Dữ Liệu";
+}
+
+<h4>@ViewData["Title"]</h4>
+<hr />
+
+<partial name="_StatusMessage" />
+<div>
+    <a asp-action="CreateSampleData">Tạo dữ liệu mẫu</a> |
+    <a asp-action="DeleteSampleData">Xóa dữ liệu mẫu (Nếu có)</a>
+</div>
+<div class="row">
+    <div class="col-6">
+        <h5>Thông tin cơ bản:</h5>
+        <ul>Tên cơ sở dữ liệu  : @Model.DbName</ul>
+        <ul>Nguồn dữ liệu      : @Model.DataSource</ul>
+        <ul>Có thể kết nối     : @Model.CanConnect</ul>
+        <hr />
+        <h5>Thông tin migrarions</h5>
+        <h6>Migrations đã áp dụng</h6>
+        @foreach (var migrations in Model.AppliedMigrations)
+        {
+            <ul>@migrations</ul>
+        }
+        <h6>Migrations chưa áp dụng (Pending)</h6>
+        @foreach (var migrations in Model.PendingMigrations)
+        {
+            <ul>@migrations</ul>
+        }
+    </div>
+    <div class="col-6">
+        <h5>Thông tin các bảng data:</h5>
+        @foreach (System.Data.DataRow row in Model.DataTableName)
+        {
+            <ul>@row["table_name"]</ul>
+        }
+    </div>
+</div>

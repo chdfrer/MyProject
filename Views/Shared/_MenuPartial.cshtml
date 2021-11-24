@@ -1,0 +1,25 @@
+﻿@using MyBlog.Areas.Categories.Models
+@model List<CategoryModel>
+
+@if (Model.Count > 0)
+{
+    await CreateList(Model);
+}
+
+@{
+    async Task CreateList(List<CategoryModel> categories)
+    {
+        <ul>
+            @foreach (CategoryModel c in categories)
+            {
+                <li>
+                    <a asp-route-categoryId="@c.Id">@c.Title</a>
+                    @if (c.CategoryChildren.Count > 0)
+                    {
+                        await CreateList(c.CategoryChildren);
+                    }
+                </li>
+            }
+        </ul>
+    }
+}

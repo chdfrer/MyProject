@@ -1,0 +1,24 @@
+﻿@model MyBlog.Areas.Blog.Models.BlogModel
+
+@{
+    ViewData["Title"] = Model.Title;
+    var author = Model.Author.Name != null ? Model.Author.Name : Model.Author.UserName;
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div>
+    <a asp-action="Index">Danh sách bài viết</a>
+</div>
+<div>
+    <hr />
+    <p>Tác giả: <strong>@author</strong></p>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Content)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Raw(Model.Content)
+        </dd>
+    </dl>
+</div>

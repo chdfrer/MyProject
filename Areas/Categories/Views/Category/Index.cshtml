@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MyBlog.Areas.Categories.Models.CategoryModel>
+
+@{
+    ViewData["Title"] = "Danh sách Category";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <a asp-action="Create">Tạo mới</a>
+    <div>Số lượng danh mục: @ViewBag.totalitem</div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParentCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">@Html.Raw(item.Title)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParentCategory.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

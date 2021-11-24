@@ -1,0 +1,73 @@
+﻿@using MyBlog.Models
+@model IEnumerable<MyBlog.Areas.Blog.Models.BlogModel>
+
+@{
+    ViewData["Title"] = "Danh mục bài viết của tôi";
+    string author = "";
+    var totalItem = ((PagingModel)ViewData["pageModel"]).TotalItem;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Tạo bài viết mới</a> |
+    <a asp-action="Index">Danh sách bài viết</a>
+</p>
+<p>Tổng số bài viết: <strong>@totalItem</strong></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BlogCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.BlogId">@Html.DisplayFor(modelItem => item.Title)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @foreach (var blogCategory in item.BlogCategory)
+                    {
+                        <p>@blogCategory.Category.Title</p>
+                    }
+                </td>
+                @if (item.Author.Name != null)
+                {
+                    author = item.Author.Name;
+                }
+                else { author = item.Author.UserName; }
+                <td>
+                    @author
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.BlogId">Sửa</a> |
+                    <a asp-action="Delete" asp-route-id="@item.BlogId">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<partial name="_PagingPartial" model="@ViewData["pageModel"]" />
